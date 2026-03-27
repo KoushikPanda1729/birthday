@@ -36,7 +36,7 @@ const GALLERY = [
   { src: '/photos/g3.jpg',  caption: 'Simply you ♥'           },
   { src: '/photos/g4.png',  caption: 'Our adventure ♥'        },
   { src: '/photos/g6.jpg',  caption: 'A day to remember ♥'    },
-  { src: '/photos/g7.jpg',  caption: 'My favourite person ♥'  },
+  { src: '/photos/first.jpg', caption: 'Where it all began ♥'  },
 ]
 
 // ─────────────────────────────────────────────────────────
