@@ -121,80 +121,148 @@ export default function BirthdayPage() {
         display: 'flex', flexDirection: 'column',
         alignItems: 'center', justifyContent: 'center', overflow: 'hidden',
       }}>
+        {/* Background video */}
         <video src="/love.mp4" autoPlay muted loop playsInline style={{
           position: 'absolute', inset: 0, width: '100%', height: '100%',
           objectFit: 'cover', objectPosition: 'center', pointerEvents: 'none',
         }} />
+
+        {/* Dark cinematic overlay — heavier so text pops */}
         <div style={{
           position: 'absolute', inset: 0,
-          background: 'linear-gradient(to bottom, rgba(7,0,15,0.6) 0%, rgba(7,0,15,0.5) 40%, rgba(7,0,15,0.92) 100%)',
+          background: 'linear-gradient(to bottom, rgba(7,0,15,0.82) 0%, rgba(7,0,15,0.68) 40%, rgba(7,0,15,0.78) 70%, rgba(7,0,15,0.98) 100%)',
         }} />
 
+        {/* Rose-gold center glow behind text */}
+        <div style={{
+          position: 'absolute', top: '50%', left: '50%',
+          transform: 'translate(-50%,-50%)',
+          width: '420px', height: '420px', borderRadius: '50%',
+          background: 'radial-gradient(circle, rgba(232,96,122,0.14) 0%, rgba(201,80,125,0.06) 55%, transparent 75%)',
+          pointerEvents: 'none', zIndex: 0,
+        }} />
+
+        {/* Twinkling stars — mix white + rose */}
         {STARS.map((s, i) => (
           <div key={i} className="animate-twinkle" style={{
             position: 'absolute', top: s.top, left: s.left,
             width: `${s.size * 2.4}px`, height: `${s.size * 2.4}px`,
-            borderRadius: '50%', background: '#fff', pointerEvents: 'none',
+            borderRadius: '50%',
+            background: i % 3 === 0 ? '#ffb3c6' : '#fff',
+            pointerEvents: 'none',
             animationDuration: s.duration, animationDelay: s.delay,
           }} />
         ))}
+
+        {/* Floating hearts */}
         {HEARTS.map((h, i) => (
           <div key={i} className="animate-float-up" style={{
             position: 'absolute', bottom: 0, left: h.l,
             fontSize: `${h.s}px`,
-            color: i % 2 === 0 ? '#e8607a' : '#ffb3c6',
+            color: i % 3 === 0 ? '#e8607a' : i % 3 === 1 ? '#ffb3c6' : '#ffd6e7',
             animationDuration: h.dur, animationDelay: h.d,
             opacity: 0, pointerEvents: 'none', userSelect: 'none',
           }}>♥</div>
         ))}
 
+        {/* Extra ambient hearts — fixed positions, very faint */}
+        {[
+          { top: '12%', left: '8%',  size: '28px', delay: '0s',   dur: '6s'  },
+          { top: '18%', left: '82%', size: '20px', delay: '2.1s', dur: '7s'  },
+          { top: '72%', left: '6%',  size: '16px', delay: '1.2s', dur: '5s'  },
+          { top: '68%', left: '88%', size: '22px', delay: '3s',   dur: '8s'  },
+        ].map((h, i) => (
+          <div key={i} className="animate-twinkle" style={{
+            position: 'absolute', top: h.top, left: h.left,
+            fontSize: h.size, color: '#e8607a', opacity: 0.12,
+            pointerEvents: 'none', userSelect: 'none',
+            animationDuration: h.dur, animationDelay: h.delay,
+          }}>♥</div>
+        ))}
+
+        {/* Main text content */}
         <div style={{
           position: 'relative', zIndex: 1, textAlign: 'center',
-          padding: '0 24px', width: '100%', maxWidth: 'clamp(320px,80vw,640px)',
+          padding: '0 28px', width: '100%', maxWidth: 'clamp(320px,88vw,620px)',
         }}>
+
+          {/* Eyebrow */}
           <p className="animate-fade-in-up" style={{
-            opacity: 0, animationDelay: '0.3s',
-            color: '#e8607a88', fontSize: '10px',
+            opacity: 0, animationDelay: '0.2s',
+            color: '#e8607acc', fontSize: '10px',
             letterSpacing: '0.38em', textTransform: 'uppercase',
-            fontFamily: 'var(--font-elegant)', fontStyle: 'italic', marginBottom: '20px',
+            fontFamily: 'var(--font-elegant)', fontStyle: 'italic', marginBottom: '18px',
+            textShadow: '0 2px 12px rgba(0,0,0,0.8)',
           }}>
             a gift made with love, just for you
           </p>
-          <div style={{ fontFamily: 'var(--font-romantic)', fontWeight: 700, lineHeight: 1.05, marginBottom: '14px' }}>
-            <TypeWriter text="Happy Birthday" speed={72} startDelay={700}
-              className="shimmer-rose" style={{ fontSize: 'clamp(2.8rem,10vw,5.5rem)' }} />
+
+          {/* Happy Birthday — typewriter */}
+          <div style={{
+            fontFamily: 'var(--font-romantic)', fontWeight: 700, lineHeight: 1.05, marginBottom: '8px',
+            filter: 'drop-shadow(0 4px 24px rgba(0,0,0,0.9))',
+          }}>
+            <TypeWriter text="Happy Birthday" speed={72} startDelay={600}
+              className="shimmer-rose" style={{ fontSize: 'clamp(3rem,11vw,6rem)' }} />
           </div>
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '14px', margin: '18px 0' }}>
-            <div style={{ height: '1px', width: '44px', background: 'linear-gradient(90deg,transparent,#e8607a66)' }} />
-            <span className="animate-heart-pulse" style={{ color: '#e8607a', fontSize: '14px', display: 'inline-block' }}>♥</span>
-            <div style={{ height: '1px', width: '44px', background: 'linear-gradient(90deg,#e8607a66,transparent)' }} />
+
+          {/* Divider with pulsing heart */}
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '12px', margin: '16px 0' }}>
+            <div style={{ height: '1px', flex: 1, maxWidth: '70px', background: 'linear-gradient(90deg,transparent,#e8607a88)' }} />
+            <span className="animate-heart-pulse" style={{ color: '#e8607a', fontSize: '16px', display: 'inline-block' }}>♥</span>
+            <div style={{ height: '1px', flex: 1, maxWidth: '70px', background: 'linear-gradient(90deg,#e8607a88,transparent)' }} />
           </div>
+
+          {/* My Love */}
           <div className="animate-fade-in-up" style={{
-            opacity: 0, animationDelay: '0.6s',
+            opacity: 0, animationDelay: '0.7s',
             fontFamily: 'var(--font-romantic)',
-            fontSize: 'clamp(1.9rem,7vw,3.4rem)',
-            color: '#ffd6e7', marginBottom: '22px',
+            fontSize: 'clamp(2rem,8vw,3.8rem)',
+            color: '#ffd6e7',
+            textShadow: '0 0 40px rgba(232,96,122,0.6), 0 4px 20px rgba(0,0,0,0.9)',
+            marginBottom: '28px',
           }}>
             My Love ❤️
           </div>
+
+          {/* Rose divider line */}
+          <div className="animate-fade-in-up" style={{
+            opacity: 0, animationDelay: '0.9s',
+            height: '1px', maxWidth: '200px', margin: '0 auto 24px',
+            background: 'linear-gradient(90deg,transparent,#e8607a66,transparent)',
+          }} />
+
+          {/* Romantic quote */}
           <p className="animate-fade-in-up" style={{
-            opacity: 0, animationDelay: '1s',
+            opacity: 0, animationDelay: '1.1s',
             fontFamily: 'var(--font-elegant)', fontStyle: 'italic',
-            color: '#ffffff99', fontSize: 'clamp(0.9rem,3vw,1.05rem)',
-            lineHeight: 1.8, maxWidth: '320px', margin: '0 auto',
+            color: '#ffffffcc', fontSize: 'clamp(0.95rem,3.2vw,1.1rem)',
+            lineHeight: 1.9, maxWidth: '300px', margin: '0 auto 24px',
+            textShadow: '0 2px 16px rgba(0,0,0,0.95)',
           }}>
             Today the whole world celebrates because you were born —
             and I am the luckiest person alive to call you mine.
           </p>
+
+          {/* Signature */}
+          <p className="animate-fade-in-up shimmer-rose" style={{
+            opacity: 0, animationDelay: '1.4s',
+            fontFamily: 'var(--font-romantic)',
+            fontSize: 'clamp(1.1rem,3.5vw,1.4rem)',
+            textShadow: '0 2px 16px rgba(0,0,0,0.9)',
+          }}>
+            — with all my love ♥
+          </p>
         </div>
 
+        {/* Scroll hint */}
         <div className="animate-fade-in-up" style={{
           position: 'absolute', bottom: '28px', left: '50%', transform: 'translateX(-50%)',
-          opacity: 0, animationDelay: '1.8s',
+          opacity: 0, animationDelay: '2s',
           display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '6px', zIndex: 1,
         }}>
-          <div style={{ color: '#ffffff55', fontSize: '18px', animation: 'gentleFloat 2s ease-in-out infinite' }}>↓</div>
-          <span style={{ fontSize: '9px', letterSpacing: '0.3em', color: '#ffffff33', fontFamily: 'var(--font-elegant)' }}>SCROLL</span>
+          <div style={{ color: '#ffffff44', fontSize: '18px', animation: 'gentleFloat 2s ease-in-out infinite' }}>↓</div>
+          <span style={{ fontSize: '9px', letterSpacing: '0.32em', color: '#ffffff33', fontFamily: 'var(--font-elegant)' }}>SCROLL</span>
         </div>
       </section>
 
