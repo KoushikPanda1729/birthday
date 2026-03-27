@@ -1,12 +1,11 @@
 // ─────────────────────────────────────────────────────────
-//  A love story in six scenes
+//  A love story in scenes
 // ─────────────────────────────────────────────────────────
 
 import Image         from 'next/image'
 import TypeWriter    from './components/TypeWriter'
 import ScrollReveal  from './components/ScrollReveal'
 import PhotoCarousel from './components/PhotoCarousel'
-import LoveReasons   from './components/LoveReasons'
 import Fireworks     from './components/Fireworks'
 import VideoPlayer   from './components/VideoPlayer'
 
@@ -29,27 +28,81 @@ const HEARTS = [
   { l: '93%', d: '7.0s', dur: '11s', s: 7  },
 ]
 
-// ── Gallery photos ────────────────────────────────────────
+// ── Gallery (couple photos) ───────────────────────────────
 const GALLERY = [
-  { src: '/assets/first-photo.jpg',            caption: 'Where it all began ♥'    },
-  { src: '/assets/IMG-20250914-WA0002.jpg',    caption: 'Us ♥'                    },
-  { src: '/assets/IMG-20250914-WA0001.jpg',    caption: 'My favourite view ♥'     },
-  { src: '/assets/IMG-20250914-WA0008.jpg',    caption: 'She glows ♥'             },
-  { src: '/assets/IMG-20251022-WA0036.jpg',    caption: 'Everywhere beautiful ♥'  },
-  { src: '/assets/IMG-20251219-WA0004.jpg',    caption: 'By the waters ♥'         },
-  { src: '/assets/IMG-20251219-WA0005.jpg',    caption: 'Under the stars ♥'       },
-  { src: '/assets/IMG-20260208-WA0001.jpg',    caption: 'Too cool for me ♥'       },
-  { src: '/assets/IMG_20260220_002853_581.webp', caption: 'Together, always ♥'   },
-  { src: '/assets/special-2.webp',             caption: 'Home ♥'                  },
+  { src: '/assets/first-photo.jpg',                                 caption: 'Where it all began ♥'   },
+  { src: '/assets/IMG-20250825-WA0014.jpg',                        caption: 'Our first adventure ♥'  },
+  { src: '/assets/IMG-20250914-WA0002.jpg',                        caption: 'Us ♥'                   },
+  { src: '/assets/IMG-20251219-WA0004.jpg',                        caption: 'By the waters ♥'        },
+  { src: '/assets/IMG-20251219-WA0005.jpg',                        caption: 'Under the stars ♥'      },
+  { src: '/assets/ChatGPT Image Dec 24, 2025, 12_44_33 AM.png',   caption: 'Our story ♥'            },
+  { src: '/assets/IMG_20260220_002853_581.webp',                   caption: 'Together, always ♥'    },
+  { src: '/assets/special-2.webp',                                  caption: 'Home ♥'                 },
 ]
 
 // ── Funny moments ─────────────────────────────────────────
 const FUNNY = [
-  { src: '/assets/Screenshot_2026-03-04-19-17-04-17_6012fa4d4ddec268fc5c7112cbb265e7.jpg',  caption: 'Getting way too close on the call 😂' },
-  { src: '/assets/Screenshot_2026-03-04-19-19-17-91_6012fa4d4ddec268fc5c7112cbb265e7.jpg', caption: 'The look you give me 😆'              },
-  { src: '/assets/Screenshot_2026-03-04-19-19-27-04_6012fa4d4ddec268fc5c7112cbb265e7.jpg', caption: 'Zoom level: maximum chaos 😂'         },
-  { src: '/assets/IMG-20260106-WA0007.jpg',   caption: 'My cutest human 🐘'                },
+  { src: '/assets/Screenshot_2026-03-04-19-17-04-17_6012fa4d4ddec268fc5c7112cbb265e7.jpg',  caption: 'Too close on the call 😂'    },
+  { src: '/assets/Screenshot_2026-03-04-19-19-17-91_6012fa4d4ddec268fc5c7112cbb265e7.jpg', caption: 'The look you give me 😆'    },
+  { src: '/assets/Screenshot_2026-03-04-19-19-27-04_6012fa4d4ddec268fc5c7112cbb265e7.jpg', caption: 'Maximum chaos 😂'            },
+  { src: '/assets/IMG-20260106-WA0007.jpg',                                                  caption: 'My cutest human 🐘'        },
 ]
+
+// ── Section title helper ──────────────────────────────────
+function SectionTitle({ eyebrow, title }: { eyebrow: string; title: string }) {
+  return (
+    <div style={{ textAlign: 'center', marginBottom: '40px' }}>
+      <p style={{
+        color: '#e8607a66', fontSize: '10px', letterSpacing: '0.38em',
+        textTransform: 'uppercase', fontFamily: 'var(--font-elegant)',
+        fontStyle: 'italic', marginBottom: '12px',
+      }}>{eyebrow}</p>
+      <h2 style={{
+        fontFamily: 'var(--font-romantic)', fontSize: 'clamp(2.2rem,7vw,3.4rem)',
+        color: '#fff0f3', lineHeight: 1.1, marginBottom: '10px',
+      }}>{title}</h2>
+      <div style={{ width: '36px', height: '1px', background: '#e8607a', opacity: 0.5, margin: '0 auto' }} />
+    </div>
+  )
+}
+
+// ── Full-screen cinematic scene ───────────────────────────
+function CinematicScene({
+  src, eyebrow, title, pos = 'center center', overlayDir = 'top',
+}: {
+  src: string; eyebrow: string; title: string; pos?: string; overlayDir?: 'top' | 'bottom'
+}) {
+  const gradient = overlayDir === 'top'
+    ? 'linear-gradient(to top, rgba(7,0,15,0.96) 0%, rgba(7,0,15,0.18) 55%, rgba(7,0,15,0.35) 100%)'
+    : 'linear-gradient(to bottom, rgba(7,0,15,0.5) 0%, rgba(7,0,15,0.1) 40%, rgba(7,0,15,0.96) 100%)'
+  return (
+    <section style={{ position: 'relative', height: '100svh', overflow: 'hidden' }}>
+      <Image src={src} alt={title} fill sizes="100vw"
+        style={{ objectFit: 'cover', objectPosition: pos }} />
+      <div style={{ position: 'absolute', inset: 0, background: gradient }} />
+      <div style={{
+        position: 'absolute',
+        ...(overlayDir === 'top' ? { bottom: 0 } : { top: 0 }),
+        left: 0, right: 0,
+        padding: 'clamp(32px,8vw,60px) clamp(24px,6vw,48px)',
+        textAlign: 'center', zIndex: 1,
+      }}>
+        <ScrollReveal>
+          <p style={{
+            fontFamily: 'var(--font-elegant)', fontStyle: 'italic',
+            color: '#e8607a99', fontSize: '11px',
+            letterSpacing: '0.3em', textTransform: 'uppercase', marginBottom: '14px',
+          }}>{eyebrow}</p>
+          <p style={{
+            fontFamily: 'var(--font-romantic)',
+            fontSize: 'clamp(2rem,7vw,3.8rem)',
+            color: '#fff0f3', lineHeight: 1.15,
+          }}>{title}</p>
+        </ScrollReveal>
+      </div>
+    </section>
+  )
+}
 
 // ─────────────────────────────────────────────────────────
 //  PAGE
@@ -60,53 +113,29 @@ export default function BirthdayPage() {
 
       {/* ════════════════════════════════════════════════
           SCENE I  ·  The Opening
-          first-photo.jpg as full-screen cinematic bg
       ════════════════════════════════════════════════ */}
-      <section
-        style={{
-          position: 'relative',
-          minHeight: '100svh',
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          justifyContent: 'center',
-          overflow: 'hidden',
-        }}
-      >
-        {/* Background video — autoplays silently, loops */}
-        <video
-          src="/love.mp4"
-          autoPlay
-          muted
-          loop
-          playsInline
-          style={{
-            position: 'absolute', inset: 0,
-            width: '100%', height: '100%',
-            objectFit: 'cover', objectPosition: 'center',
-            pointerEvents: 'none',
-          }}
-        />
-
-        {/* Dark gradient overlay */}
+      <section style={{
+        position: 'relative', minHeight: '100svh',
+        display: 'flex', flexDirection: 'column',
+        alignItems: 'center', justifyContent: 'center', overflow: 'hidden',
+      }}>
+        <video src="/love.mp4" autoPlay muted loop playsInline style={{
+          position: 'absolute', inset: 0, width: '100%', height: '100%',
+          objectFit: 'cover', objectPosition: 'center', pointerEvents: 'none',
+        }} />
         <div style={{
           position: 'absolute', inset: 0,
           background: 'linear-gradient(to bottom, rgba(7,0,15,0.6) 0%, rgba(7,0,15,0.5) 40%, rgba(7,0,15,0.92) 100%)',
         }} />
 
-        {/* Stars */}
         {STARS.map((s, i) => (
           <div key={i} className="animate-twinkle" style={{
-            position: 'absolute',
-            top: s.top, left: s.left,
+            position: 'absolute', top: s.top, left: s.left,
             width: `${s.size * 2.4}px`, height: `${s.size * 2.4}px`,
-            borderRadius: '50%', background: '#fff',
-            pointerEvents: 'none',
+            borderRadius: '50%', background: '#fff', pointerEvents: 'none',
             animationDuration: s.duration, animationDelay: s.delay,
           }} />
         ))}
-
-        {/* Floating hearts */}
         {HEARTS.map((h, i) => (
           <div key={i} className="animate-float-up" style={{
             position: 'absolute', bottom: 0, left: h.l,
@@ -117,39 +146,27 @@ export default function BirthdayPage() {
           }}>♥</div>
         ))}
 
-        {/* Content */}
         <div style={{
-          position: 'relative', zIndex: 1,
-          textAlign: 'center',
-          padding: '0 24px',
-          width: '100%', maxWidth: 'clamp(320px,80vw,640px)',
+          position: 'relative', zIndex: 1, textAlign: 'center',
+          padding: '0 24px', width: '100%', maxWidth: 'clamp(320px,80vw,640px)',
         }}>
           <p className="animate-fade-in-up" style={{
             opacity: 0, animationDelay: '0.3s',
             color: '#e8607a88', fontSize: '10px',
             letterSpacing: '0.38em', textTransform: 'uppercase',
-            fontFamily: 'var(--font-elegant)', fontStyle: 'italic',
-            marginBottom: '20px',
+            fontFamily: 'var(--font-elegant)', fontStyle: 'italic', marginBottom: '20px',
           }}>
             a gift made with love, just for you
           </p>
-
           <div style={{ fontFamily: 'var(--font-romantic)', fontWeight: 700, lineHeight: 1.05, marginBottom: '14px' }}>
-            <TypeWriter
-              text="Happy Birthday"
-              speed={72}
-              startDelay={700}
-              className="shimmer-rose"
-              style={{ fontSize: 'clamp(2.8rem,10vw,5.5rem)' }}
-            />
+            <TypeWriter text="Happy Birthday" speed={72} startDelay={700}
+              className="shimmer-rose" style={{ fontSize: 'clamp(2.8rem,10vw,5.5rem)' }} />
           </div>
-
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '14px', margin: '18px 0' }}>
             <div style={{ height: '1px', width: '44px', background: 'linear-gradient(90deg,transparent,#e8607a66)' }} />
             <span className="animate-heart-pulse" style={{ color: '#e8607a', fontSize: '14px', display: 'inline-block' }}>♥</span>
             <div style={{ height: '1px', width: '44px', background: 'linear-gradient(90deg,#e8607a66,transparent)' }} />
           </div>
-
           <div className="animate-fade-in-up" style={{
             opacity: 0, animationDelay: '0.6s',
             fontFamily: 'var(--font-romantic)',
@@ -158,7 +175,6 @@ export default function BirthdayPage() {
           }}>
             My Love ❤️
           </div>
-
           <p className="animate-fade-in-up" style={{
             opacity: 0, animationDelay: '1s',
             fontFamily: 'var(--font-elegant)', fontStyle: 'italic',
@@ -170,66 +186,45 @@ export default function BirthdayPage() {
           </p>
         </div>
 
-        {/* Scroll cue */}
         <div className="animate-fade-in-up" style={{
           position: 'absolute', bottom: '28px', left: '50%', transform: 'translateX(-50%)',
           opacity: 0, animationDelay: '1.8s',
-          display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '6px',
-          zIndex: 1,
+          display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '6px', zIndex: 1,
         }}>
           <div style={{ color: '#ffffff55', fontSize: '18px', animation: 'gentleFloat 2s ease-in-out infinite' }}>↓</div>
-          <span style={{ fontSize: '9px', letterSpacing: '0.3em', color: '#ffffff33', fontFamily: 'var(--font-elegant)' }}>
-            SCROLL
-          </span>
+          <span style={{ fontSize: '9px', letterSpacing: '0.3em', color: '#ffffff33', fontFamily: 'var(--font-elegant)' }}>SCROLL</span>
         </div>
       </section>
+
+
+      {/* ════════════════════════════════════════════════
+          SCENE II  ·  Breathtaking
+          Her stunning black-saree photoshoot
+      ════════════════════════════════════════════════ */}
+      <CinematicScene
+        src="/assets/IMG-20250914-WA0008.jpg"
+        eyebrow="every single time"
+        title="You take my breath away ♥"
+        pos="center 30%"
+        overlayDir="top"
+      />
 
 
       {/* ════════════════════════════════════════════════
           SCENE III  ·  The Special Moment
-          The kiss photo — full screen
       ════════════════════════════════════════════════ */}
-      <section style={{ position: 'relative', height: '100svh', overflow: 'hidden' }}>
-        <Image
-          src="/assets/special.webp"
-          alt="Special moment"
-          fill
-          sizes="100vw"
-          style={{ objectFit: 'cover', objectPosition: 'center 55%' }}
-        />
-        <div style={{
-          position: 'absolute', inset: 0,
-          background: 'linear-gradient(to top, rgba(7,0,15,0.95) 0%, rgba(7,0,15,0.15) 50%, transparent 100%)',
-        }} />
-        <div style={{
-          position: 'absolute', bottom: 0, left: 0, right: 0,
-          padding: 'clamp(28px,8vw,52px) 28px',
-          textAlign: 'center', zIndex: 1,
-        }}>
-          <ScrollReveal>
-            <p style={{
-              fontFamily: 'var(--font-elegant)', fontStyle: 'italic',
-              color: '#e8607a99', fontSize: '11px',
-              letterSpacing: '0.3em', textTransform: 'uppercase',
-              marginBottom: '12px',
-            }}>
-              my favourite moment
-            </p>
-            <p style={{
-              fontFamily: 'var(--font-romantic)',
-              fontSize: 'clamp(1.9rem,6vw,3rem)',
-              color: '#fff0f3', lineHeight: 1.2,
-            }}>
-              This joy, this smile — all mine ♥
-            </p>
-          </ScrollReveal>
-        </div>
-      </section>
+      <CinematicScene
+        src="/assets/special.webp"
+        eyebrow="my favourite moment"
+        title="This joy, this smile — all mine ♥"
+        pos="center 55%"
+        overlayDir="top"
+      />
 
 
       {/* ════════════════════════════════════════════════
-          SCENE IV  ·  Our Story
-          Swipeable gallery of memories
+          SCENE IV  ·  Our Beautiful Story
+          Swipeable couple gallery
       ════════════════════════════════════════════════ */}
       <section style={{
         padding: 'clamp(56px,10vw,88px) 0',
@@ -237,16 +232,9 @@ export default function BirthdayPage() {
       }}>
         <ScrollReveal>
           <div style={{ textAlign: 'center', padding: '0 clamp(24px,8vw,80px)', marginBottom: '40px' }}>
-            <p style={{ color: '#e8607a66', fontSize: '10px', letterSpacing: '0.38em', textTransform: 'uppercase', fontFamily: 'var(--font-elegant)', fontStyle: 'italic', marginBottom: '12px' }}>
-              our story in pictures
-            </p>
-            <h2 style={{ fontFamily: 'var(--font-romantic)', fontSize: 'clamp(2.2rem,7vw,3.4rem)', color: '#fff0f3', lineHeight: 1.1, marginBottom: '10px' }}>
-              Beautiful Memories
-            </h2>
-            <div style={{ width: '36px', height: '1px', background: '#e8607a', opacity: 0.5, margin: '0 auto' }} />
+            <SectionTitle eyebrow="our story in pictures" title="Beautiful Memories" />
           </div>
         </ScrollReveal>
-
         <ScrollReveal delay={150}>
           <PhotoCarousel photos={GALLERY} />
         </ScrollReveal>
@@ -254,51 +242,191 @@ export default function BirthdayPage() {
 
 
       {/* ════════════════════════════════════════════════
-          SCENE IV.5  ·  The Silly Side
+          SCENE V  ·  Just You
+          Magazine-style portrait gallery — all her photos
       ════════════════════════════════════════════════ */}
       <section style={{
-        padding: 'clamp(56px,10vw,88px) clamp(20px,5vw,40px)',
+        padding: 'clamp(56px,10vw,88px) clamp(16px,5vw,36px)',
+        background: 'linear-gradient(180deg,#0f0020 0%,#07000f 50%,#0f0020 100%)',
+      }}>
+        <ScrollReveal>
+          <SectionTitle eyebrow="just you, always you" title="Simply Beautiful ♥" />
+        </ScrollReveal>
+
+        <div style={{ maxWidth: 'clamp(300px,92vw,560px)', margin: '0 auto', display: 'flex', flexDirection: 'column', gap: 'clamp(10px,3vw,18px)' }}>
+
+          {/* Row 1 — full width */}
+          <ScrollReveal>
+            <div style={{ position: 'relative', borderRadius: '16px', overflow: 'hidden', boxShadow: '0 12px 40px rgba(0,0,0,0.6)' }}>
+              <img src="/assets/IMG-20250914-WA0001.jpg" alt="reading"
+                style={{ width: '100%', aspectRatio: '4/5', objectFit: 'cover', objectPosition: 'center 35%', display: 'block' }} />
+              <div style={{
+                position: 'absolute', bottom: 0, left: 0, right: 0,
+                background: 'linear-gradient(to top, rgba(7,0,15,0.88), transparent)',
+                padding: '28px 18px 16px', textAlign: 'center',
+              }}>
+                <p style={{ fontFamily: 'var(--font-romantic)', color: '#ffd6e7', fontSize: 'clamp(1.2rem,4vw,1.5rem)' }}>
+                  Lost in her world ♥
+                </p>
+              </div>
+            </div>
+          </ScrollReveal>
+
+          {/* Row 2 — two columns */}
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 'clamp(10px,3vw,18px)' }}>
+            {[
+              { src: '/assets/IMG-20250822-WA0012.jpg', caption: 'Every glance ♥', pos: 'center 20%' },
+              { src: '/assets/IMG-20250822-WA0013.jpg', caption: 'Pure grace ♥',   pos: 'center 30%' },
+            ].map((p, i) => (
+              <ScrollReveal key={i} delay={i * 80}>
+                <div style={{ position: 'relative', borderRadius: '14px', overflow: 'hidden', boxShadow: '0 8px 24px rgba(0,0,0,0.5)' }}>
+                  <img src={p.src} alt={p.caption}
+                    style={{ width: '100%', aspectRatio: '3/4', objectFit: 'cover', objectPosition: p.pos, display: 'block' }} />
+                  <div style={{
+                    position: 'absolute', bottom: 0, left: 0, right: 0,
+                    background: 'linear-gradient(to top, rgba(7,0,15,0.85), transparent)',
+                    padding: '20px 10px 10px', textAlign: 'center',
+                  }}>
+                    <p style={{ fontFamily: 'var(--font-romantic)', color: '#ffd6e7', fontSize: 'clamp(0.95rem,3vw,1.1rem)' }}>
+                      {p.caption}
+                    </p>
+                  </div>
+                </div>
+              </ScrollReveal>
+            ))}
+          </div>
+
+          {/* Row 3 — full width */}
+          <ScrollReveal>
+            <div style={{ position: 'relative', borderRadius: '16px', overflow: 'hidden', boxShadow: '0 12px 40px rgba(0,0,0,0.6)' }}>
+              <img src="/assets/IMG-20250914-WA0008.jpg" alt="glowing"
+                style={{ width: '100%', aspectRatio: '4/5', objectFit: 'cover', objectPosition: 'center 28%', display: 'block' }} />
+              <div style={{
+                position: 'absolute', bottom: 0, left: 0, right: 0,
+                background: 'linear-gradient(to top, rgba(7,0,15,0.9), transparent)',
+                padding: '28px 18px 16px', textAlign: 'center',
+              }}>
+                <p style={{ fontFamily: 'var(--font-romantic)', color: '#ffd6e7', fontSize: 'clamp(1.2rem,4vw,1.5rem)' }}>
+                  She glows ♥
+                </p>
+              </div>
+            </div>
+          </ScrollReveal>
+
+          {/* Row 4 — two columns */}
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 'clamp(10px,3vw,18px)' }}>
+            {[
+              { src: '/assets/IMG-20251022-WA0036.jpg', caption: 'Lighting every room ♥', pos: 'center 20%' },
+              { src: '/assets/IMG-20251023-WA0007.jpg', caption: 'Beautiful always ♥',    pos: 'center 20%' },
+            ].map((p, i) => (
+              <ScrollReveal key={i} delay={i * 80}>
+                <div style={{ position: 'relative', borderRadius: '14px', overflow: 'hidden', boxShadow: '0 8px 24px rgba(0,0,0,0.5)' }}>
+                  <img src={p.src} alt={p.caption}
+                    style={{ width: '100%', aspectRatio: '3/4', objectFit: 'cover', objectPosition: p.pos, display: 'block' }} />
+                  <div style={{
+                    position: 'absolute', bottom: 0, left: 0, right: 0,
+                    background: 'linear-gradient(to top, rgba(7,0,15,0.85), transparent)',
+                    padding: '20px 10px 10px', textAlign: 'center',
+                  }}>
+                    <p style={{ fontFamily: 'var(--font-romantic)', color: '#ffd6e7', fontSize: 'clamp(0.95rem,3vw,1.1rem)' }}>
+                      {p.caption}
+                    </p>
+                  </div>
+                </div>
+              </ScrollReveal>
+            ))}
+          </div>
+
+          {/* Row 5 — full width */}
+          <ScrollReveal>
+            <div style={{ position: 'relative', borderRadius: '16px', overflow: 'hidden', boxShadow: '0 12px 40px rgba(0,0,0,0.6)' }}>
+              <img src="/assets/IMG-20260208-WA0001.jpg" alt="stunning"
+                style={{ width: '100%', aspectRatio: '4/5', objectFit: 'cover', objectPosition: 'center 22%', display: 'block' }} />
+              <div style={{
+                position: 'absolute', bottom: 0, left: 0, right: 0,
+                background: 'linear-gradient(to top, rgba(7,0,15,0.9), transparent)',
+                padding: '28px 18px 16px', textAlign: 'center',
+              }}>
+                <p style={{ fontFamily: 'var(--font-romantic)', color: '#ffd6e7', fontSize: 'clamp(1.2rem,4vw,1.5rem)' }}>
+                  My favourite human ♥
+                </p>
+              </div>
+            </div>
+          </ScrollReveal>
+
+          {/* Row 6 — two columns */}
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 'clamp(10px,3vw,18px)' }}>
+            {[
+              { src: '/assets/IMG-20260117-WA0013.jpg', caption: 'Even without trying ♥', pos: 'center 25%' },
+              { src: '/assets/IMG20260124202559.jpg',   caption: 'That smile ♥',           pos: 'center 20%' },
+            ].map((p, i) => (
+              <ScrollReveal key={i} delay={i * 80}>
+                <div style={{ position: 'relative', borderRadius: '14px', overflow: 'hidden', boxShadow: '0 8px 24px rgba(0,0,0,0.5)' }}>
+                  <img src={p.src} alt={p.caption}
+                    style={{ width: '100%', aspectRatio: '3/4', objectFit: 'cover', objectPosition: p.pos, display: 'block' }} />
+                  <div style={{
+                    position: 'absolute', bottom: 0, left: 0, right: 0,
+                    background: 'linear-gradient(to top, rgba(7,0,15,0.85), transparent)',
+                    padding: '20px 10px 10px', textAlign: 'center',
+                  }}>
+                    <p style={{ fontFamily: 'var(--font-romantic)', color: '#ffd6e7', fontSize: 'clamp(0.95rem,3vw,1.1rem)' }}>
+                      {p.caption}
+                    </p>
+                  </div>
+                </div>
+              </ScrollReveal>
+            ))}
+          </div>
+
+          {/* Row 7 — full width, the 4-grid selfie collage */}
+          <ScrollReveal>
+            <div style={{ position: 'relative', borderRadius: '16px', overflow: 'hidden', boxShadow: '0 12px 40px rgba(0,0,0,0.6)' }}>
+              <img src="/assets/IMG-20260209-WA0010.jpg" alt="collage"
+                style={{ width: '100%', aspectRatio: '1/1', objectFit: 'cover', objectPosition: 'center', display: 'block' }} />
+              <div style={{
+                position: 'absolute', bottom: 0, left: 0, right: 0,
+                background: 'linear-gradient(to top, rgba(7,0,15,0.88), transparent)',
+                padding: '28px 18px 16px', textAlign: 'center',
+              }}>
+                <p style={{ fontFamily: 'var(--font-romantic)', color: '#ffd6e7', fontSize: 'clamp(1.2rem,4vw,1.5rem)' }}>
+                  Every angle, perfect ♥
+                </p>
+              </div>
+            </div>
+          </ScrollReveal>
+
+        </div>
+      </section>
+
+
+      {/* ════════════════════════════════════════════════
+          SCENE VI  ·  The Silly Side
+      ════════════════════════════════════════════════ */}
+      <section style={{
+        padding: 'clamp(56px,10vw,88px) clamp(16px,5vw,36px)',
         background: 'linear-gradient(180deg,#07000f 0%,#100018 100%)',
       }}>
         <ScrollReveal>
-          <div style={{ textAlign: 'center', marginBottom: '36px' }}>
-            <p style={{ color: '#e8607a66', fontSize: '10px', letterSpacing: '0.38em', textTransform: 'uppercase', fontFamily: 'var(--font-elegant)', fontStyle: 'italic', marginBottom: '12px' }}>
-              because you are also this
-            </p>
-            <h2 style={{ fontFamily: 'var(--font-romantic)', fontSize: 'clamp(2.2rem,7vw,3.4rem)', color: '#fff0f3', lineHeight: 1.1, marginBottom: '10px' }}>
-              The Silly Side ♥
-            </h2>
-            <div style={{ width: '36px', height: '1px', background: '#e8607a', opacity: 0.5, margin: '0 auto' }} />
-          </div>
+          <SectionTitle eyebrow="because you are also this" title="The Silly Side ♥" />
         </ScrollReveal>
 
         <div style={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(2, 1fr)',
-          gap: 'clamp(10px,3vw,20px)',
-          maxWidth: 'clamp(300px,88vw,540px)',
-          margin: '0 auto',
+          display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)',
+          gap: 'clamp(10px,3vw,18px)',
+          maxWidth: 'clamp(300px,88vw,540px)', margin: '0 auto',
         }}>
           {FUNNY.map((f, i) => (
             <ScrollReveal key={i} delay={i * 90}>
               <div style={{ textAlign: 'center' }}>
-                <div style={{
-                  borderRadius: '14px', overflow: 'hidden',
-                  boxShadow: '0 8px 28px rgba(0,0,0,0.55)',
-                  border: '1px solid #ffffff08',
-                }}>
-                  <img
-                    src={f.src} alt={f.caption}
-                    style={{ width: '100%', aspectRatio: '3/4', objectFit: 'cover', objectPosition: 'center 20%', display: 'block' }}
-                  />
+                <div style={{ borderRadius: '14px', overflow: 'hidden', boxShadow: '0 8px 28px rgba(0,0,0,0.55)', border: '1px solid #ffffff08' }}>
+                  <img src={f.src} alt={f.caption}
+                    style={{ width: '100%', aspectRatio: '3/4', objectFit: 'cover', objectPosition: 'center 20%', display: 'block' }} />
                 </div>
                 <p style={{
                   fontFamily: 'var(--font-elegant)', fontStyle: 'italic',
                   color: '#ffd6e788', fontSize: 'clamp(0.72rem,2.4vw,0.85rem)',
                   lineHeight: 1.5, marginTop: '10px', padding: '0 4px',
-                }}>
-                  {f.caption}
-                </p>
+                }}>{f.caption}</p>
               </div>
             </ScrollReveal>
           ))}
@@ -307,35 +435,23 @@ export default function BirthdayPage() {
 
 
       {/* ════════════════════════════════════════════════
-          SCENE V  ·  A Moment We Shared
-          The video
+          SCENE VII  ·  A Moment We Shared — Video
       ════════════════════════════════════════════════ */}
       <section style={{
         padding: 'clamp(56px,10vw,88px) 24px',
         background: 'radial-gradient(ellipse at 50% 50%,#16002a 0%,#07000f 100%)',
       }}>
         <ScrollReveal>
-          <div style={{ textAlign: 'center', marginBottom: '36px' }}>
-            <p style={{ color: '#e8607a66', fontSize: '10px', letterSpacing: '0.38em', textTransform: 'uppercase', fontFamily: 'var(--font-elegant)', fontStyle: 'italic', marginBottom: '12px' }}>
-              a moment we shared
-            </p>
-            <h2 style={{ fontFamily: 'var(--font-romantic)', fontSize: 'clamp(2.2rem,7vw,3.4rem)', color: '#fff0f3', lineHeight: 1.1, marginBottom: '10px' }}>
-              Just For You ♥
-            </h2>
-            <div style={{ width: '36px', height: '1px', background: '#e8607a', opacity: 0.5, margin: '0 auto' }} />
-          </div>
+          <SectionTitle eyebrow="a moment we shared" title="Just For You ♥" />
         </ScrollReveal>
-
         <ScrollReveal delay={150}>
           <VideoPlayer src="/assets/WhatsApp Video 2026-03-27 at 16.50.14.mp4" />
         </ScrollReveal>
       </section>
 
 
-
-
       {/* ════════════════════════════════════════════════
-          SCENE VII  ·  Make a Wish
+          SCENE VIII  ·  Make a Wish
       ════════════════════════════════════════════════ */}
       <section style={{
         padding: 'clamp(64px,12vw,100px) 24px clamp(80px,15vw,120px)',
@@ -343,7 +459,6 @@ export default function BirthdayPage() {
         background: 'radial-gradient(ellipse at 50% 55%,#1a0028 0%,#07000f 80%)',
         position: 'relative', overflow: 'hidden',
       }}>
-        {/* Faded giant heart bg */}
         <div aria-hidden style={{
           position: 'absolute', inset: 0,
           display: 'flex', alignItems: 'center', justifyContent: 'center',
@@ -371,16 +486,11 @@ export default function BirthdayPage() {
               Blow out the candles and let the universe hear what your heart is hoping for.
             </p>
           </ScrollReveal>
-
-          <ScrollReveal delay={180}>
-            <Fireworks />
-          </ScrollReveal>
-
+          <ScrollReveal delay={180}><Fireworks /></ScrollReveal>
           <ScrollReveal delay={320}>
             <p className="shimmer-gold" style={{
               fontFamily: 'var(--font-romantic)',
-              fontSize: 'clamp(1.6rem,5vw,2.4rem)',
-              marginTop: '60px',
+              fontSize: 'clamp(1.6rem,5vw,2.4rem)', marginTop: '60px',
             }}>
               With all my love, always ♥
             </p>
@@ -390,10 +500,7 @@ export default function BirthdayPage() {
 
 
       {/* Footer */}
-      <footer style={{
-        padding: '24px', textAlign: 'center',
-        borderTop: '1px solid #ffffff08', background: '#050008',
-      }}>
+      <footer style={{ padding: '24px', textAlign: 'center', borderTop: '1px solid #ffffff08', background: '#050008' }}>
         <p style={{ color: '#ffffff15', fontSize: '11px', fontFamily: 'var(--font-elegant)', letterSpacing: '0.1em' }}>
           Made with ♥ just for you &nbsp;·&nbsp; {new Date().getFullYear()}
         </p>
