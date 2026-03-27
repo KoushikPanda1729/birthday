@@ -642,10 +642,24 @@ export default function BirthdayPage() {
             </div>
           </ScrollReveal>
 
-          {/* Video player */}
-          <ScrollReveal delay={200}>
-            <VideoPlayer src="/assets/WhatsApp Video 2026-03-27 at 16.50.14.mp4" noSound />
-          </ScrollReveal>
+          {/* Videos */}
+          {[
+            { src: '/assets/WhatsApp Video 2026-03-27 at 16.50.14.mp4', label: 'video one' },
+            { src: '/assets/WhatsApp Video 2026-03-27 at 18.09.23.mp4', label: 'video two' },
+            { src: '/assets/WhatsApp Video 2026-03-27 at 18.12.17.mp4', label: 'video three' },
+          ].map((v, i) => (
+            <ScrollReveal key={i} delay={i * 160}>
+              <div style={{ marginBottom: i < 2 ? 'clamp(32px,8vw,52px)' : 0 }}>
+                <p style={{
+                  textAlign: 'center', marginBottom: '14px',
+                  fontFamily: 'var(--font-elegant)', fontStyle: 'italic',
+                  color: '#e8607a66', fontSize: '10px', letterSpacing: '0.32em',
+                  textTransform: 'uppercase',
+                }}>♥ {v.label}</p>
+                <VideoPlayer src={v.src} />
+              </div>
+            </ScrollReveal>
+          ))}
 
           <ScrollReveal delay={300}>
             <div style={{ marginTop: '32px' }}>

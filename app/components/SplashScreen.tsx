@@ -114,7 +114,7 @@ export default function SplashScreen({ onTap, onDone }: { onTap: () => void; onD
               textShadow: '0 0 30px rgba(232,96,122,0.4)',
             }}>
               Welcome to this world,<br />
-              <span className="shimmer-rose">my Princess</span> 👑
+              <span className="shimmer-rose">my Queen</span> 👑
             </p>
             <p style={{
               fontFamily: 'var(--font-elegant)', fontStyle: 'italic',
