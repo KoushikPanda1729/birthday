@@ -74,22 +74,58 @@ export default function SplashScreen({ onTap, onDone }: { onTap: () => void; onD
       </div>
 
       {/* Text */}
-      <div style={{ textAlign: 'center', padding: '0 32px' }}>
-        <p style={{
-          fontFamily: 'var(--font-elegant)', fontStyle: 'italic',
-          color: '#e8607a99', fontSize: '11px',
-          letterSpacing: '0.35em', textTransform: 'uppercase',
-          marginBottom: '14px',
-        }}>
-          preparing something special
-        </p>
-        <p style={{
-          fontFamily: 'var(--font-romantic)',
-          fontSize: 'clamp(1.6rem,6vw,2.4rem)',
-          color: '#fff0f3', lineHeight: 1.3, marginBottom: '10px',
-        }}>
-          {tapped ? 'Your surprise is\nalmost ready ♥' : 'Tap anywhere\nto begin ♥'}
-        </p>
+      <div style={{ textAlign: 'center', padding: '0 36px' }}>
+        {!tapped ? (
+          <>
+            <p style={{
+              fontFamily: 'var(--font-elegant)', fontStyle: 'italic',
+              color: '#e8607a99', fontSize: '11px',
+              letterSpacing: '0.35em', textTransform: 'uppercase',
+              marginBottom: '14px',
+            }}>
+              preparing something special
+            </p>
+            <p style={{
+              fontFamily: 'var(--font-romantic)',
+              fontSize: 'clamp(1.6rem,6vw,2.4rem)',
+              color: '#fff0f3', lineHeight: 1.3,
+            }}>
+              Tap anywhere to begin ♥
+            </p>
+          </>
+        ) : (
+          <>
+            {/* Special welcome message — fades in after tap */}
+            <p style={{
+              fontFamily: 'var(--font-elegant)', fontStyle: 'italic',
+              color: '#e8607a99', fontSize: '11px',
+              letterSpacing: '0.35em', textTransform: 'uppercase',
+              marginBottom: '18px',
+              animation: 'fadeInUp 0.7s ease-out forwards',
+            }}>
+              she arrived ♥
+            </p>
+            <p style={{
+              fontFamily: 'var(--font-romantic)',
+              fontSize: 'clamp(1.9rem,7vw,3rem)',
+              color: '#fff0f3', lineHeight: 1.25,
+              marginBottom: '16px',
+              animation: 'fadeInUp 0.8s ease-out 0.1s both',
+              textShadow: '0 0 30px rgba(232,96,122,0.4)',
+            }}>
+              Welcome to this world,<br />
+              <span className="shimmer-rose">my Princess</span> 👑
+            </p>
+            <p style={{
+              fontFamily: 'var(--font-elegant)', fontStyle: 'italic',
+              color: '#ffffff77', fontSize: 'clamp(0.9rem,3vw,1.05rem)',
+              lineHeight: 1.8,
+              animation: 'fadeInUp 0.8s ease-out 0.3s both',
+            }}>
+              The day you were born,<br />the world became more beautiful.
+            </p>
+          </>
+        )}
       </div>
 
       {/* Progress bar */}
