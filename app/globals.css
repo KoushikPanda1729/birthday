@@ -68,6 +68,31 @@ body {
   to   { transform: scaleY(-1); }
 }
 
+@keyframes flameWobble {
+  0%   { transform: scaleX(1)    scaleY(1)    rotate(-3deg); }
+  33%  { transform: scaleX(0.88) scaleY(1.1)  rotate(3deg);  }
+  66%  { transform: scaleX(1.08) scaleY(0.95) rotate(-2deg); }
+  100% { transform: scaleX(0.95) scaleY(1.05) rotate(2deg);  }
+}
+
+@keyframes smokeDrift {
+  0%   { opacity: 0.7; transform: translateY(0)    scaleX(1);   }
+  100% { opacity: 0;   transform: translateY(-50px) scaleX(2.5); }
+}
+
+@keyframes cutSlash {
+  from { clip-path: inset(0 100% 0 0); }
+  to   { clip-path: inset(0 0%   0 0); }
+}
+
+@keyframes cakeShake {
+  0%,100% { transform: translateX(0); }
+  20%     { transform: translateX(-6px) rotate(-1deg); }
+  40%     { transform: translateX(6px)  rotate(1deg);  }
+  60%     { transform: translateX(-4px) rotate(-0.5deg); }
+  80%     { transform: translateX(4px)  rotate(0.5deg);  }
+}
+
 /* ── Utility classes ───────────────────────── */
 
 .animate-heart-pulse  { animation: heartPulse   2s  ease-in-out infinite; }
