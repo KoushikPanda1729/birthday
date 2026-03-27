@@ -29,14 +29,26 @@ const HEARTS = [
   { l: '93%', d: '7.0s', dur: '11s', s: 7  },
 ]
 
-// ── Gallery photos (real images) ──────────────────────────
+// ── Gallery photos ────────────────────────────────────────
 const GALLERY = [
-  { src: '/photos/g1.webp', caption: 'Together always ♥'      },
-  { src: '/photos/g2.jpg',  caption: 'You shine so bright ♥'  },
-  { src: '/photos/g3.jpg',  caption: 'Simply you ♥'           },
-  { src: '/photos/g4.png',  caption: 'Our adventure ♥'        },
-  { src: '/photos/g6.jpg',  caption: 'A day to remember ♥'    },
-  { src: '/photos/first.jpg', caption: 'Where it all began ♥'  },
+  { src: '/assets/first-photo.jpg',            caption: 'Where it all began ♥'    },
+  { src: '/assets/IMG-20250914-WA0002.jpg',    caption: 'Us ♥'                    },
+  { src: '/assets/IMG-20250914-WA0001.jpg',    caption: 'My favourite view ♥'     },
+  { src: '/assets/IMG-20250914-WA0008.jpg',    caption: 'She glows ♥'             },
+  { src: '/assets/IMG-20251022-WA0036.jpg',    caption: 'Everywhere beautiful ♥'  },
+  { src: '/assets/IMG-20251219-WA0004.jpg',    caption: 'By the waters ♥'         },
+  { src: '/assets/IMG-20251219-WA0005.jpg',    caption: 'Under the stars ♥'       },
+  { src: '/assets/IMG-20260208-WA0001.jpg',    caption: 'Too cool for me ♥'       },
+  { src: '/assets/IMG_20260220_002853_581.webp', caption: 'Together, always ♥'   },
+  { src: '/assets/special-2.webp',             caption: 'Home ♥'                  },
+]
+
+// ── Funny moments ─────────────────────────────────────────
+const FUNNY = [
+  { src: '/assets/Screenshot_2026-03-04-19-17-04-17_6012fa4d4ddec268fc5c7112cbb265e7.jpg',  caption: 'Getting way too close on the call 😂' },
+  { src: '/assets/Screenshot_2026-03-04-19-19-17-91_6012fa4d4ddec268fc5c7112cbb265e7.jpg', caption: 'The look you give me 😆'              },
+  { src: '/assets/Screenshot_2026-03-04-19-19-27-04_6012fa4d4ddec268fc5c7112cbb265e7.jpg', caption: 'Zoom level: maximum chaos 😂'         },
+  { src: '/assets/IMG-20260106-WA0007.jpg',   caption: 'My cutest human 🐘'                },
 ]
 
 // ─────────────────────────────────────────────────────────
@@ -179,7 +191,7 @@ export default function BirthdayPage() {
       ════════════════════════════════════════════════ */}
       <section style={{ position: 'relative', height: '100svh', overflow: 'hidden' }}>
         <Image
-          src="/photos/special.webp"
+          src="/assets/special.webp"
           alt="Special moment"
           fill
           sizes="100vw"
@@ -242,6 +254,59 @@ export default function BirthdayPage() {
 
 
       {/* ════════════════════════════════════════════════
+          SCENE IV.5  ·  The Silly Side
+      ════════════════════════════════════════════════ */}
+      <section style={{
+        padding: 'clamp(56px,10vw,88px) clamp(20px,5vw,40px)',
+        background: 'linear-gradient(180deg,#07000f 0%,#100018 100%)',
+      }}>
+        <ScrollReveal>
+          <div style={{ textAlign: 'center', marginBottom: '36px' }}>
+            <p style={{ color: '#e8607a66', fontSize: '10px', letterSpacing: '0.38em', textTransform: 'uppercase', fontFamily: 'var(--font-elegant)', fontStyle: 'italic', marginBottom: '12px' }}>
+              because you are also this
+            </p>
+            <h2 style={{ fontFamily: 'var(--font-romantic)', fontSize: 'clamp(2.2rem,7vw,3.4rem)', color: '#fff0f3', lineHeight: 1.1, marginBottom: '10px' }}>
+              The Silly Side ♥
+            </h2>
+            <div style={{ width: '36px', height: '1px', background: '#e8607a', opacity: 0.5, margin: '0 auto' }} />
+          </div>
+        </ScrollReveal>
+
+        <div style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(2, 1fr)',
+          gap: 'clamp(10px,3vw,20px)',
+          maxWidth: 'clamp(300px,88vw,540px)',
+          margin: '0 auto',
+        }}>
+          {FUNNY.map((f, i) => (
+            <ScrollReveal key={i} delay={i * 90}>
+              <div style={{ textAlign: 'center' }}>
+                <div style={{
+                  borderRadius: '14px', overflow: 'hidden',
+                  boxShadow: '0 8px 28px rgba(0,0,0,0.55)',
+                  border: '1px solid #ffffff08',
+                }}>
+                  <img
+                    src={f.src} alt={f.caption}
+                    style={{ width: '100%', aspectRatio: '3/4', objectFit: 'cover', objectPosition: 'center 20%', display: 'block' }}
+                  />
+                </div>
+                <p style={{
+                  fontFamily: 'var(--font-elegant)', fontStyle: 'italic',
+                  color: '#ffd6e788', fontSize: 'clamp(0.72rem,2.4vw,0.85rem)',
+                  lineHeight: 1.5, marginTop: '10px', padding: '0 4px',
+                }}>
+                  {f.caption}
+                </p>
+              </div>
+            </ScrollReveal>
+          ))}
+        </div>
+      </section>
+
+
+      {/* ════════════════════════════════════════════════
           SCENE V  ·  A Moment We Shared
           The video
       ════════════════════════════════════════════════ */}
@@ -262,31 +327,11 @@ export default function BirthdayPage() {
         </ScrollReveal>
 
         <ScrollReveal delay={150}>
-          <VideoPlayer />
+          <VideoPlayer src="/assets/WhatsApp Video 2026-03-27 at 16.50.14.mp4" />
         </ScrollReveal>
       </section>
 
 
-      {/* ════════════════════════════════════════════════
-          SCENE VI  ·  Why I Love You
-      ════════════════════════════════════════════════ */}
-      <section style={{
-        padding: 'clamp(56px,10vw,88px) clamp(20px,6vw,48px)',
-        background: 'linear-gradient(180deg,#07000f 0%,#0f0020 50%,#07000f 100%)',
-      }}>
-        <ScrollReveal>
-          <div style={{ textAlign: 'center', marginBottom: '44px' }}>
-            <p style={{ color: '#e8607a66', fontSize: '10px', letterSpacing: '0.38em', textTransform: 'uppercase', fontFamily: 'var(--font-elegant)', fontStyle: 'italic', marginBottom: '12px' }}>
-              just a few of the infinite reasons
-            </p>
-            <h2 style={{ fontFamily: 'var(--font-romantic)', fontSize: 'clamp(2.2rem,7vw,3.4rem)', color: '#fff0f3', lineHeight: 1.1, marginBottom: '10px' }}>
-              Why I Love You
-            </h2>
-            <div style={{ width: '36px', height: '1px', background: '#e8607a', opacity: 0.5, margin: '0 auto' }} />
-          </div>
-        </ScrollReveal>
-        <LoveReasons />
-      </section>
 
 
       {/* ════════════════════════════════════════════════

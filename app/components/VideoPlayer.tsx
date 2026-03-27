@@ -2,7 +2,7 @@
 
 import { useRef, useState } from 'react'
 
-export default function VideoPlayer() {
+export default function VideoPlayer({ src = '/love.mp4' }: { src?: string }) {
   const ref                     = useRef<HTMLVideoElement>(null)
   const [playing, setPlaying]   = useState(false)
   const [muted,   setMuted]     = useState(true)
@@ -32,7 +32,7 @@ export default function VideoPlayer() {
     >
       <video
         ref={ref}
-        src="/love.mp4"
+        src={src}
         playsInline
         muted
         loop
