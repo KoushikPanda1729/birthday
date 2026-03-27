@@ -21,15 +21,18 @@ export default function CakeScreen({ onMusicStart, onDone }: {
   }
 
   return (
-    <div style={{
-      position: 'fixed', inset: 0, zIndex: 99998,
-      display: 'flex', flexDirection: 'column',
-      alignItems: 'center', justifyContent: 'center',
-      opacity: leaving ? 0 : 1,
-      transition: 'opacity 1s ease',
-      overflow: 'hidden',
-      userSelect: 'none',
-    }}>
+    <div
+      onClick={blowCandle}
+      style={{
+        position: 'fixed', inset: 0, zIndex: 99998,
+        display: 'flex', flexDirection: 'column',
+        alignItems: 'center', justifyContent: 'center',
+        opacity: leaving ? 0 : 1,
+        transition: 'opacity 1s ease',
+        overflow: 'hidden',
+        userSelect: 'none',
+        cursor: blown ? 'default' : 'pointer',
+      }}>
 
       {/* ── Background — warm candlelight glow ── */}
       <div style={{
@@ -69,12 +72,10 @@ export default function CakeScreen({ onMusicStart, onDone }: {
       {/* ── Candle + Cake ── */}
       <div style={{ position: 'relative', zIndex: 2 }}>
 
-        {/* Candle — clickable */}
-        <div
-          onClick={blowCandle}
-          style={{
+        {/* Candle */}
+        <div style={{
             display: 'flex', flexDirection: 'column',
-            alignItems: 'center', cursor: blown ? 'default' : 'pointer',
+            alignItems: 'center',
             marginBottom: '-2px', position: 'relative',
             WebkitTapHighlightColor: 'transparent',
           }}
