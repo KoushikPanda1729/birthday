@@ -2,59 +2,62 @@
 
 import { useEffect, useRef, useState } from 'react'
 
-export default function BgMusic() {
+export default function BgMusic({ startPlaying = false }: { startPlaying?: boolean }) {
   const btnRef   = useRef<HTMLButtonElement>(null)
   const audio    = useRef<HTMLAudioElement | null>(null)
   const unmuted  = useRef(false)
   const [on, setOn] = useState(true)
 
+  // Create audio and start muted autoplay on mount
   useEffect(() => {
     const a = new Audio('/assets/birthday.mp3')
     a.loop   = true
     a.volume = 0.6
-    a.muted  = true          // muted autoplay always works in every browser
+    a.muted  = true
     audio.current = a
-    a.play().catch(() => {}) // silent play — browser allows muted
+    a.play().catch(() => {})
 
+    // Fallback: unmute on any page interaction
     function doUnmute() {
       if (unmuted.current) return
       unmuted.current = true
       a.muted = false
-      // If initial play() failed for any reason, retry now (inside a gesture)
       if (a.paused) a.play().catch(() => {})
-      window.removeEventListener('scroll',     onScroll)
-      window.removeEventListener('touchstart', onTouch)
-      window.removeEventListener('mousedown',  onMouse)
+      window.removeEventListener('scroll',     doUnmute)
+      window.removeEventListener('touchstart', doUnmute)
+      window.removeEventListener('mousedown',  doUnmute)
     }
-
-    function onScroll()              { doUnmute() }
-    function onTouch(e: TouchEvent)  { if (!btnRef.current?.contains(e.target as Node)) doUnmute() }
-    function onMouse(e: MouseEvent)  { if (!btnRef.current?.contains(e.target as Node)) doUnmute() }
-
-    window.addEventListener('scroll',     onScroll, { passive: true })
-    window.addEventListener('touchstart', onTouch,  { passive: true })
-    window.addEventListener('mousedown',  onMouse)
+    window.addEventListener('scroll',     doUnmute, { passive: true })
+    window.addEventListener('touchstart', doUnmute, { passive: true })
+    window.addEventListener('mousedown',  doUnmute)
 
     return () => {
-      window.removeEventListener('scroll',     onScroll)
-      window.removeEventListener('touchstart', onTouch)
-      window.removeEventListener('mousedown',  onMouse)
+      window.removeEventListener('scroll',     doUnmute)
+      window.removeEventListener('touchstart', doUnmute)
+      window.removeEventListener('mousedown',  doUnmute)
       a.pause()
     }
   }, [])
 
+  // Unmute as soon as startPlaying becomes true (splash was tapped)
+  useEffect(() => {
+    if (!startPlaying) return
+    const a = audio.current
+    if (!a || unmuted.current) return
+    unmuted.current = true
+    a.muted = false          // no play() needed — audio is already playing muted
+    if (a.paused) a.play().catch(() => {})
+  }, [startPlaying])
+
   function toggle() {
     const a = audio.current
     if (!a) return
-
     if (!unmuted.current) {
-      // First tap on icon — just unmute, keep playing
       unmuted.current = true
       a.muted = false
       if (a.paused) a.play().catch(() => {})
       return
     }
-
     if (on) { a.pause(); setOn(false) }
     else    { a.play().catch(() => {}); setOn(true) }
   }

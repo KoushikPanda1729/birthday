@@ -8,7 +8,7 @@ import ScrollReveal  from './components/ScrollReveal'
 import PhotoCarousel from './components/PhotoCarousel'
 import Fireworks     from './components/Fireworks'
 import VideoPlayer   from './components/VideoPlayer'
-import BgMusic      from './components/BgMusic'
+import PageWrapper  from './components/PageWrapper'
 
 // ── Deterministic stars ───────────────────────────────────
 const STARS = Array.from({ length: 18 }, (_, i) => ({
@@ -110,8 +110,8 @@ function CinematicScene({
 // ─────────────────────────────────────────────────────────
 export default function BirthdayPage() {
   return (
+    <PageWrapper>
     <div style={{ background: '#07000f', overflowX: 'hidden' }}>
-      <BgMusic />
 
       {/* ════════════════════════════════════════════════
           SCENE I  ·  The Opening
@@ -792,5 +792,6 @@ export default function BirthdayPage() {
       </footer>
 
     </div>
+    </PageWrapper>
   )
 }
