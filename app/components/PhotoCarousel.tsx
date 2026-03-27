@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useRef } from 'react'
+import { useState, useRef, useEffect } from 'react'
 
 interface Photo {
   src:     string | null
@@ -30,11 +30,26 @@ function Placeholder() {
   )
 }
 
+const AUTO_INTERVAL = 3500
+
 export default function PhotoCarousel({ photos }: { photos: Photo[] }) {
   const [idx, setIdx]     = useState(0)
   const startX            = useRef(0)
   const moved             = useRef(false)
   const dragging          = useRef(false)
+  const timerRef          = useRef<ReturnType<typeof setTimeout> | null>(null)
+
+  // Auto-advance every 3.5s; resets on manual interaction
+  useEffect(() => {
+    timerRef.current = setTimeout(() => {
+      setIdx(i => (i + 1) % photos.length)
+    }, AUTO_INTERVAL)
+    return () => { if (timerRef.current) clearTimeout(timerRef.current) }
+  }, [idx, photos.length])
+
+  function resetTimer() {
+    if (timerRef.current) clearTimeout(timerRef.current)
+  }
 
   function onTouchStart(e: React.TouchEvent) {
     startX.current = e.touches[0].clientX
@@ -45,9 +60,10 @@ export default function PhotoCarousel({ photos }: { photos: Photo[] }) {
   }
   function onTouchEnd(e: React.TouchEvent) {
     if (!moved.current) return
+    resetTimer()
     const dx = startX.current - e.changedTouches[0].clientX
-    if (dx >  48 && idx < photos.length - 1) setIdx(i => i + 1)
-    if (dx < -48 && idx > 0)                 setIdx(i => i - 1)
+    if (dx >  48) setIdx(i => (i + 1) % photos.length)
+    if (dx < -48) setIdx(i => (i - 1 + photos.length) % photos.length)
   }
 
   function onMouseDown(e: React.MouseEvent) {
@@ -63,13 +79,14 @@ export default function PhotoCarousel({ photos }: { photos: Photo[] }) {
     if (!dragging.current) return
     dragging.current = false
     if (!moved.current) return
+    resetTimer()
     const dx = startX.current - e.clientX
-    if (dx >  48 && idx < photos.length - 1) setIdx(i => i + 1)
-    if (dx < -48 && idx > 0)                 setIdx(i => i - 1)
+    if (dx >  48) setIdx(i => (i + 1) % photos.length)
+    if (dx < -48) setIdx(i => (i - 1 + photos.length) % photos.length)
   }
 
-  const prev = () => { if (idx > 0)                 setIdx(i => i - 1) }
-  const next = () => { if (idx < photos.length - 1) setIdx(i => i + 1) }
+  const prev = () => { resetTimer(); setIdx(i => (i - 1 + photos.length) % photos.length) }
+  const next = () => { resetTimer(); setIdx(i => (i + 1) % photos.length) }
 
   const arrowStyle: React.CSSProperties = {
     position: 'absolute', top: '42%', transform: 'translateY(-50%)',
@@ -142,7 +159,7 @@ export default function PhotoCarousel({ photos }: { photos: Photo[] }) {
           <button
             key={i}
             className={`dot ${i === idx ? 'dot-active' : 'dot-inactive'}`}
-            onClick={() => setIdx(i)}
+            onClick={() => { resetTimer(); setIdx(i) }}
             aria-label={`Go to photo ${i + 1}`}
           />
         ))}

@@ -656,22 +656,10 @@ export default function BirthdayPage() {
                   color: '#e8607a66', fontSize: '10px', letterSpacing: '0.32em',
                   textTransform: 'uppercase',
                 }}>♥ {v.label}</p>
-                <VideoPlayer src={v.src} />
+                <VideoPlayer src={v.src} noSound />
               </div>
             </ScrollReveal>
           ))}
-
-          <ScrollReveal delay={300}>
-            <div style={{ marginTop: '32px' }}>
-              <VideoPlayer src="/assets/WhatsApp Video 2026-03-27 at 18.09.23.mp4" noSound />
-            </div>
-          </ScrollReveal>
-
-          <ScrollReveal delay={400}>
-            <div style={{ marginTop: '32px' }}>
-              <VideoPlayer src="/assets/WhatsApp Video 2026-03-27 at 18.12.17.mp4" noSound />
-            </div>
-          </ScrollReveal>
         </div>
       </section>
 
