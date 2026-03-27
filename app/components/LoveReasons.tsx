@@ -11,7 +11,7 @@ const REASONS = [
 
 export default function LoveReasons() {
   return (
-    <div style={{ width: '100%', maxWidth: '480px', margin: '0 auto' }}>
+    <div style={{ width: '100%', maxWidth: 'clamp(320px,70vw,640px)', margin: '0 auto' }}>
       {REASONS.map((r, i) => (
         <ScrollReveal key={i} delay={i * 80}>
           <div

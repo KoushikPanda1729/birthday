@@ -23,7 +23,7 @@ export default function VideoPlayer() {
       style={{
         position: 'relative',
         width: '100%',
-        maxWidth: '380px',
+        maxWidth: 'clamp(300px,60vw,640px)',
         margin: '0 auto',
         borderRadius: '20px',
         overflow: 'hidden',

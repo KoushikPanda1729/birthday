@@ -31,9 +31,10 @@ function Placeholder() {
 }
 
 export default function PhotoCarousel({ photos }: { photos: Photo[] }) {
-  const [idx, setIdx]   = useState(0)
-  const startX          = useRef(0)
-  const moved           = useRef(false)
+  const [idx, setIdx]     = useState(0)
+  const startX            = useRef(0)
+  const moved             = useRef(false)
+  const dragging          = useRef(false)
 
   function onTouchStart(e: React.TouchEvent) {
     startX.current = e.touches[0].clientX
@@ -49,14 +50,58 @@ export default function PhotoCarousel({ photos }: { photos: Photo[] }) {
     if (dx < -48 && idx > 0)                 setIdx(i => i - 1)
   }
 
+  function onMouseDown(e: React.MouseEvent) {
+    startX.current = e.clientX
+    moved.current  = false
+    dragging.current = true
+  }
+  function onMouseMove(e: React.MouseEvent) {
+    if (!dragging.current) return
+    if (Math.abs(e.clientX - startX.current) > 8) moved.current = true
+  }
+  function onMouseUp(e: React.MouseEvent) {
+    if (!dragging.current) return
+    dragging.current = false
+    if (!moved.current) return
+    const dx = startX.current - e.clientX
+    if (dx >  48 && idx < photos.length - 1) setIdx(i => i + 1)
+    if (dx < -48 && idx > 0)                 setIdx(i => i - 1)
+  }
+
+  const prev = () => { if (idx > 0)                 setIdx(i => i - 1) }
+  const next = () => { if (idx < photos.length - 1) setIdx(i => i + 1) }
+
+  const arrowStyle: React.CSSProperties = {
+    position: 'absolute', top: '42%', transform: 'translateY(-50%)',
+    zIndex: 10, width: '44px', height: '44px', borderRadius: '50%',
+    border: 'none', cursor: 'pointer',
+    background: 'rgba(232,96,122,0.18)', backdropFilter: 'blur(8px)',
+    color: '#ffd6e7', fontSize: '22px', lineHeight: 1,
+    display: 'flex', alignItems: 'center', justifyContent: 'center',
+    transition: 'background 0.2s',
+  }
+
   return (
-    <div className="w-full select-none">
+    <div className="w-full select-none" style={{ position: 'relative' }}>
+      {/* Desktop arrow — prev */}
+      {idx > 0 && (
+        <button onClick={prev} style={{ ...arrowStyle, left: 'clamp(4px,2vw,24px)' }}>‹</button>
+      )}
+      {/* Desktop arrow — next */}
+      {idx < photos.length - 1 && (
+        <button onClick={next} style={{ ...arrowStyle, right: 'clamp(4px,2vw,24px)' }}>›</button>
+      )}
+
       {/* Slide track */}
       <div
-        style={{ overflow: 'hidden' }}
+        style={{ overflow: 'hidden', cursor: dragging.current ? 'grabbing' : 'grab' }}
         onTouchStart={onTouchStart}
         onTouchMove={onTouchMove}
         onTouchEnd={onTouchEnd}
+        onMouseDown={onMouseDown}
+        onMouseMove={onMouseMove}
+        onMouseUp={onMouseUp}
+        onMouseLeave={() => { dragging.current = false }}
       >
         <div
           style={{
@@ -69,11 +114,11 @@ export default function PhotoCarousel({ photos }: { photos: Photo[] }) {
           {photos.map((photo, i) => (
             <div
               key={i}
-              style={{ width: '100%', flexShrink: 0, display: 'flex', justifyContent: 'center', padding: '0 24px' }}
+              style={{ width: '100%', flexShrink: 0, display: 'flex', justifyContent: 'center', padding: '0 clamp(24px,8vw,80px)' }}
             >
               <div
                 className="polaroid"
-                style={{ width: '100%', maxWidth: '260px', transform: i % 2 === 0 ? 'rotate(-2.5deg)' : 'rotate(2deg)' }}
+                style={{ width: '100%', maxWidth: 'clamp(220px,38vw,340px)', transform: i % 2 === 0 ? 'rotate(-2.5deg)' : 'rotate(2deg)' }}
               >
                 {photo.src
                   ? <img src={photo.src} alt={photo.caption} style={{ width: '100%', aspectRatio: '3/4', objectFit: 'cover', objectPosition: 'center top', display: 'block' }} />

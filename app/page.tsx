@@ -110,7 +110,7 @@ export default function BirthdayPage() {
           position: 'relative', zIndex: 1,
           textAlign: 'center',
           padding: '0 24px',
-          width: '100%', maxWidth: '480px',
+          width: '100%', maxWidth: 'clamp(320px,80vw,640px)',
         }}>
           <p className="animate-fade-in-up" style={{
             opacity: 0, animationDelay: '0.3s',
@@ -183,7 +183,7 @@ export default function BirthdayPage() {
           alt="Special moment"
           fill
           sizes="100vw"
-          style={{ objectFit: 'cover', objectPosition: 'center 20%' }}
+          style={{ objectFit: 'cover', objectPosition: 'center 55%' }}
         />
         <div style={{
           position: 'absolute', inset: 0,
@@ -224,7 +224,7 @@ export default function BirthdayPage() {
         background: 'linear-gradient(180deg,#07000f 0%,#0f0020 50%,#07000f 100%)',
       }}>
         <ScrollReveal>
-          <div style={{ textAlign: 'center', padding: '0 24px', marginBottom: '40px' }}>
+          <div style={{ textAlign: 'center', padding: '0 clamp(24px,8vw,80px)', marginBottom: '40px' }}>
             <p style={{ color: '#e8607a66', fontSize: '10px', letterSpacing: '0.38em', textTransform: 'uppercase', fontFamily: 'var(--font-elegant)', fontStyle: 'italic', marginBottom: '12px' }}>
               our story in pictures
             </p>
