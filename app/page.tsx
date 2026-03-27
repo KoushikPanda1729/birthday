@@ -8,6 +8,7 @@ import ScrollReveal  from './components/ScrollReveal'
 import PhotoCarousel from './components/PhotoCarousel'
 import Fireworks     from './components/Fireworks'
 import VideoPlayer   from './components/VideoPlayer'
+import BgMusic      from './components/BgMusic'
 
 // ── Deterministic stars ───────────────────────────────────
 const STARS = Array.from({ length: 18 }, (_, i) => ({
@@ -110,6 +111,7 @@ function CinematicScene({
 export default function BirthdayPage() {
   return (
     <div style={{ background: '#07000f', overflowX: 'hidden' }}>
+      <BgMusic />
 
       {/* ════════════════════════════════════════════════
           SCENE I  ·  The Opening
@@ -395,6 +397,55 @@ export default function BirthdayPage() {
             </div>
           </ScrollReveal>
 
+          {/* Row 8 — two columns */}
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 'clamp(10px,3vw,18px)' }}>
+            {[
+              { src: '/assets/IMG-20251022-WA0039.jpg', caption: 'In her element ♥',  pos: 'center 20%' },
+              { src: '/assets/IMG-20260105-WA0007.jpg', caption: 'Cozy & perfect ♥',  pos: 'center 25%' },
+            ].map((p, i) => (
+              <ScrollReveal key={i} delay={i * 80}>
+                <div style={{ position: 'relative', borderRadius: '14px', overflow: 'hidden', boxShadow: '0 8px 24px rgba(0,0,0,0.5)' }}>
+                  <img src={p.src} alt={p.caption}
+                    style={{ width: '100%', aspectRatio: '3/4', objectFit: 'cover', objectPosition: p.pos, display: 'block' }} />
+                  <div style={{
+                    position: 'absolute', bottom: 0, left: 0, right: 0,
+                    background: 'linear-gradient(to top, rgba(7,0,15,0.85), transparent)',
+                    padding: '20px 10px 10px', textAlign: 'center',
+                  }}>
+                    <p style={{ fontFamily: 'var(--font-romantic)', color: '#ffd6e7', fontSize: 'clamp(0.95rem,3vw,1.1rem)' }}>
+                      {p.caption}
+                    </p>
+                  </div>
+                </div>
+              </ScrollReveal>
+            ))}
+          </div>
+
+          {/* Row 9 — the yellow flower / ring close-up, romantic closing shot */}
+          <ScrollReveal>
+            <div style={{ position: 'relative', borderRadius: '16px', overflow: 'hidden', boxShadow: '0 12px 40px rgba(0,0,0,0.6)' }}>
+              <img src="/assets/IMG-20250911-WA0012.jpg" alt="forever"
+                style={{ width: '100%', aspectRatio: '4/5', objectFit: 'cover', objectPosition: 'center 40%', display: 'block' }} />
+              <div style={{
+                position: 'absolute', inset: 0,
+                background: 'linear-gradient(to top, rgba(7,0,15,0.92) 0%, rgba(7,0,15,0.1) 50%, transparent 100%)',
+              }} />
+              <div style={{
+                position: 'absolute', bottom: 0, left: 0, right: 0,
+                padding: '32px 20px 20px', textAlign: 'center',
+              }}>
+                <p style={{
+                  fontFamily: 'var(--font-elegant)', fontStyle: 'italic',
+                  color: '#e8607a88', fontSize: '10px',
+                  letterSpacing: '0.3em', textTransform: 'uppercase', marginBottom: '8px',
+                }}>always & forever</p>
+                <p className="shimmer-rose" style={{ fontFamily: 'var(--font-romantic)', fontSize: 'clamp(1.4rem,5vw,2rem)' }}>
+                  Mine ♥
+                </p>
+              </div>
+            </div>
+          </ScrollReveal>
+
         </div>
       </section>
 
@@ -438,15 +489,181 @@ export default function BirthdayPage() {
           SCENE VII  ·  A Moment We Shared — Video
       ════════════════════════════════════════════════ */}
       <section style={{
-        padding: 'clamp(56px,10vw,88px) 24px',
-        background: 'radial-gradient(ellipse at 50% 50%,#16002a 0%,#07000f 100%)',
+        padding: 'clamp(56px,10vw,88px) clamp(20px,6vw,40px)',
+        background: 'radial-gradient(ellipse at 50% 40%, #1e0030 0%, #07000f 70%)',
+        position: 'relative', overflow: 'hidden',
       }}>
-        <ScrollReveal>
-          <SectionTitle eyebrow="a moment we shared" title="Just For You ♥" />
-        </ScrollReveal>
-        <ScrollReveal delay={150}>
-          <VideoPlayer src="/assets/WhatsApp Video 2026-03-27 at 16.50.14.mp4" />
-        </ScrollReveal>
+        {/* Soft sparkle dots bg */}
+        {Array.from({ length: 12 }, (_, i) => (
+          <div key={i} className="animate-twinkle" style={{
+            position: 'absolute',
+            top:  `${((i * 17 + 5) * 29) % 100}%`,
+            left: `${((i * 13 + 3) * 37) % 100}%`,
+            width: '3px', height: '3px', borderRadius: '50%',
+            background: '#e8607a', opacity: 0.3, pointerEvents: 'none',
+            animationDuration: `${1.8 + (i % 4) * 0.5}s`,
+            animationDelay: `${(i * 0.3) % 2}s`,
+          }} />
+        ))}
+
+        <div style={{ position: 'relative', zIndex: 1 }}>
+          <ScrollReveal>
+            <SectionTitle eyebrow="a message just for you" title="Just For You ♥" />
+          </ScrollReveal>
+
+          {/* Love letter card */}
+          <ScrollReveal delay={100}>
+            <div style={{
+              maxWidth: 'clamp(280px,82vw,400px)', margin: '0 auto 36px',
+              background: 'linear-gradient(145deg,#1a0a28,#120020)',
+              border: '1px solid #e8607a22',
+              borderRadius: '20px',
+              padding: 'clamp(22px,6vw,32px)',
+              boxShadow: '0 8px 40px rgba(232,96,122,0.12), inset 0 1px 0 rgba(232,96,122,0.08)',
+              position: 'relative',
+            }}>
+              {/* Corner hearts */}
+              <span style={{ position: 'absolute', top: '14px', left: '16px',  fontSize: '10px', color: '#e8607a44' }}>♥</span>
+              <span style={{ position: 'absolute', top: '14px', right: '16px', fontSize: '10px', color: '#e8607a44' }}>♥</span>
+
+              {/* Opening line */}
+              <p style={{
+                fontFamily: 'var(--font-elegant)', fontStyle: 'italic',
+                color: '#e8607a88', fontSize: '10px', letterSpacing: '0.28em',
+                textTransform: 'uppercase', textAlign: 'center', marginBottom: '18px',
+              }}>for your eyes only</p>
+
+              {/* Divider */}
+              <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '20px' }}>
+                <div style={{ flex: 1, height: '1px', background: 'linear-gradient(90deg,transparent,#e8607a33)' }} />
+                <span style={{ color: '#e8607a66', fontSize: '12px' }}>♥</span>
+                <div style={{ flex: 1, height: '1px', background: 'linear-gradient(90deg,#e8607a33,transparent)' }} />
+              </div>
+
+              <p style={{
+                fontFamily: 'var(--font-romantic)',
+                color: '#ffd6e7cc', fontSize: 'clamp(1.05rem,3.5vw,1.25rem)',
+                lineHeight: 1.85, textAlign: 'center',
+              }}>
+                I saved this because it is my favourite kind of you —
+                unfiltered, real, completely yourself.
+              </p>
+
+              <p style={{
+                fontFamily: 'var(--font-romantic)',
+                color: '#e8a0bfaa', fontSize: 'clamp(0.95rem,3vw,1.1rem)',
+                lineHeight: 1.85, textAlign: 'center', marginTop: '14px',
+              }}>
+                I could watch this forever and still fall in love all over again.
+              </p>
+
+              {/* Signature */}
+              <div style={{ marginTop: '22px', textAlign: 'center' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '10px' }}>
+                  <div style={{ flex: 1, height: '1px', background: 'linear-gradient(90deg,transparent,#e8607a22)' }} />
+                  <span style={{ color: '#e8607a55', fontSize: '10px' }}>♥</span>
+                  <div style={{ flex: 1, height: '1px', background: 'linear-gradient(90deg,#e8607a22,transparent)' }} />
+                </div>
+                <p className="shimmer-rose" style={{
+                  fontFamily: 'var(--font-romantic)',
+                  fontSize: 'clamp(1.3rem,4vw,1.6rem)',
+                }}>
+                  Always yours ♥
+                </p>
+              </div>
+            </div>
+          </ScrollReveal>
+
+          {/* Video player */}
+          <ScrollReveal delay={200}>
+            <VideoPlayer src="/assets/WhatsApp Video 2026-03-27 at 16.50.14.mp4" noSound />
+          </ScrollReveal>
+
+          <ScrollReveal delay={300}>
+            <div style={{ marginTop: '32px' }}>
+              <VideoPlayer src="/assets/WhatsApp Video 2026-03-27 at 18.09.23.mp4" noSound />
+            </div>
+          </ScrollReveal>
+
+          <ScrollReveal delay={400}>
+            <div style={{ marginTop: '32px' }}>
+              <VideoPlayer src="/assets/WhatsApp Video 2026-03-27 at 18.12.17.mp4" noSound />
+            </div>
+          </ScrollReveal>
+        </div>
+      </section>
+
+
+      {/* ════════════════════════════════════════════════
+          SCENE VII.5  ·  Love Declaration
+      ════════════════════════════════════════════════ */}
+      <section style={{
+        position: 'relative', overflow: 'hidden',
+        padding: 'clamp(72px,14vw,110px) clamp(28px,8vw,64px)',
+        background: 'linear-gradient(180deg,#07000f 0%,#12001e 50%,#07000f 100%)',
+        textAlign: 'center',
+      }}>
+        {/* Faint bg hearts */}
+        {['12%','85%','50%'].map((l,i) => (
+          <div key={i} aria-hidden style={{
+            position:'absolute', top:`${20+i*28}%`, left:l,
+            fontSize:'clamp(60px,18vw,120px)', color:'#e8607a04',
+            fontFamily:'serif', pointerEvents:'none', userSelect:'none',
+            transform:`rotate(${i*14-10}deg)`,
+          }}>♥</div>
+        ))}
+
+        <div style={{ position:'relative', zIndex:1, maxWidth:'clamp(300px,86vw,560px)', margin:'0 auto' }}>
+
+          <ScrollReveal>
+            <p style={{
+              fontFamily:'var(--font-elegant)', fontStyle:'italic',
+              color:'#e8607a55', fontSize:'10px',
+              letterSpacing:'0.35em', textTransform:'uppercase', marginBottom:'48px',
+            }}>from my heart to yours</p>
+          </ScrollReveal>
+
+          {[
+            { line: 'On every ordinary day,',       sub: 'you make it extraordinary.' },
+            { line: 'In every quiet moment,',        sub: 'you are my loudest joy.'    },
+            { line: 'Across every distance,',        sub: 'you feel like home.'        },
+            { line: 'You are the greatest thing',    sub: 'that ever happened to me.'  },
+          ].map((s, i) => (
+            <ScrollReveal key={i} delay={i * 60}>
+              <div style={{ marginBottom: 'clamp(28px,7vw,44px)' }}>
+                <p style={{
+                  fontFamily: 'var(--font-elegant)', fontStyle: 'italic',
+                  color: '#ffffff55', fontSize: 'clamp(0.85rem,2.8vw,1rem)',
+                  letterSpacing: '0.04em', marginBottom: '4px',
+                }}>{s.line}</p>
+                <p style={{
+                  fontFamily: 'var(--font-romantic)',
+                  fontSize: 'clamp(1.7rem,6vw,2.8rem)',
+                  color: '#fff0f3', lineHeight: 1.15,
+                }}>{s.sub}</p>
+              </div>
+            </ScrollReveal>
+          ))}
+
+          <ScrollReveal delay={320}>
+            <div style={{ margin: 'clamp(36px,8vw,56px) auto 0', maxWidth: '240px' }}>
+              <div style={{ height: '1px', background: 'linear-gradient(90deg,transparent,#e8607a55,transparent)', marginBottom: '32px' }} />
+              <p className="shimmer-rose" style={{
+                fontFamily: 'var(--font-romantic)',
+                fontSize: 'clamp(2rem,7vw,3.2rem)', lineHeight: 1.2,
+              }}>
+                I love you —
+              </p>
+              <p style={{
+                fontFamily: 'var(--font-elegant)', fontStyle: 'italic',
+                color: '#e8a0bf99', fontSize: 'clamp(0.95rem,3vw,1.1rem)',
+                marginTop: '10px', letterSpacing: '0.08em',
+              }}>
+                now, always, forever.
+              </p>
+            </div>
+          </ScrollReveal>
+        </div>
       </section>
 
 

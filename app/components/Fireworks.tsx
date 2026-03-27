@@ -78,24 +78,33 @@ export default function Fireworks() {
       </div>
 
       {!blown ? (
-        <button
-          onClick={launch}
-          style={{
-            background: 'linear-gradient(135deg,#e8607a,#c9507d)',
-            color: '#fff', border: 'none', cursor: 'pointer',
-            padding: '16px 36px', borderRadius: '100px',
-            fontFamily: 'var(--font-romantic)', fontSize: 'clamp(1.3rem,4vw,1.6rem)',
-            fontWeight: 600, letterSpacing: '0.02em',
-            boxShadow: '0 8px 28px rgba(232,96,122,0.5)',
-            transition: 'transform 0.2s ease',
-            /* min tap target */
-            minHeight: '52px', minWidth: '200px',
-          }}
-          onTouchStart={e => (e.currentTarget.style.transform = 'scale(0.96)')}
-          onTouchEnd={e   => (e.currentTarget.style.transform = 'scale(1)')}
-        >
-          ✨ Make a Wish &amp; Blow!
-        </button>
+        <div style={{ position: 'relative', display: 'inline-block' }}>
+          {/* Outer pulse ring */}
+          <div style={{
+            position: 'absolute', inset: '-10px', borderRadius: '100px',
+            border: '1.5px solid rgba(232,96,122,0.35)',
+            animation: 'heartPulse 1.8s ease-in-out infinite',
+            pointerEvents: 'none',
+          }} />
+          <button
+            onClick={launch}
+            style={{
+              background: 'linear-gradient(135deg,#e8607a,#c9507d)',
+              color: '#fff', border: 'none', cursor: 'pointer',
+              padding: '16px 40px', borderRadius: '100px',
+              fontFamily: 'var(--font-romantic)', fontSize: 'clamp(1.3rem,4vw,1.6rem)',
+              fontWeight: 600, letterSpacing: '0.02em',
+              boxShadow: '0 8px 32px rgba(232,96,122,0.55), 0 0 0 0 rgba(232,96,122,0.4)',
+              animation: 'heartPulse 1.8s ease-in-out infinite',
+              position: 'relative', zIndex: 1,
+              minHeight: '52px', minWidth: '200px',
+            }}
+            onTouchStart={e => (e.currentTarget.style.transform = 'scale(0.96)')}
+            onTouchEnd={e   => (e.currentTarget.style.transform = 'scale(1)')}
+          >
+            ✨ Make a Wish &amp; Blow!
+          </button>
+        </div>
       ) : (
         <div className="animate-fade-in-up" style={{ textAlign: 'center' }}>
           <p className="shimmer-rose" style={{ fontFamily: 'var(--font-romantic)', fontSize: 'clamp(1.9rem,6vw,3rem)', fontWeight: 700 }}>
